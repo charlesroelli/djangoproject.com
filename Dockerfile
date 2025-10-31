@@ -14,6 +14,7 @@ RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends \
         gettext \
         git \
+        libatomic1 \
         libpq5 \
         postgresql-common \
         make \
