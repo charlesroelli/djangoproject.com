@@ -79,9 +79,18 @@ def document(request, lang, version, url):
         version
     )
 
+    try:
+        doc = Document.objects.get(
+            release=release, path__in=[url, f"{url}index"]
+        ).metadata
+    except Document.DoesNotExist:
+        # We won't find e.g. the genindex page nor partially
+        # translated documents in the database.
+        doc = load_json_file(doc_path)
+
     context = {
-        "doc": load_json_file(doc_path),
-        "env": load_json_file(docroot / "globalcontext.json"),
+        "doc": doc,
+        "env": release.global_context,
         "lang": lang,
         "version": version,
         "canonical_version": canonical_version,

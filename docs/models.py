@@ -111,6 +111,7 @@ class DocumentRelease(models.Model):
         limit_choices_to={"status": "f"},
         on_delete=models.CASCADE,
     )
+    global_context = models.JSONField(default=dict)
     is_default = models.BooleanField(default=False)
 
     objects = DocumentReleaseQuerySet.as_manager()
